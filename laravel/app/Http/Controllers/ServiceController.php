@@ -35,10 +35,26 @@ class ServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function createService(Request $request)
     {
-        //
-        return 'succesfully creted';
+
+        if ($request->validate([
+            'name' => ['required', 'max:45'],
+            'description' => ['required', 'max:45'],
+            'price' => ['required', 'integer'],
+            'duration' => ['required', 'integer']
+        ])) {
+            $service = new Service();
+            $service->name = $request->name;
+            $service->description = $request->description;
+            $service->price = $request->price;
+            $service->duration = $request->duration;
+            $service->save();
+
+            return response('You have successfully created a service.', 200);
+        } else {
+            return response('error', 405);
+        }
     }
 
     /**

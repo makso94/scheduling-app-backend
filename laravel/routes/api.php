@@ -21,4 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/services', [ServiceController::class, 'index']);
 Route::get('/services/{id}', [ServiceController::class,'show']);
-Route::post('/services',[ServiceController::class,'store']);
+Route::post('/services',[ServiceController::class,'createService']);
