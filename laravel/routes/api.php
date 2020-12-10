@@ -3,6 +3,7 @@
 use App\Http\Controllers\ServiceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use phpDocumentor\Reflection\DocBlock\Serializer;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/services', [ServiceController::class, 'index']);
-Route::get('/services/{id}', [ServiceController::class,'show']);
-Route::post('/services',[ServiceController::class,'createService']);
+Route::get('/services', [ServiceController::class, 'getAll']);
+Route::get('/services/{id}', [ServiceController::class, 'get']);
+Route::post('/services', [ServiceController::class, 'create']);
+Route::delete('/services/{id}', [ServiceController::class, 'delete']);

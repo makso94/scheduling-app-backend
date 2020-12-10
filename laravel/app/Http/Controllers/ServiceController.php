@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
+use Exception;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -13,20 +14,9 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getAll()
     {
-        //
         return new ServiceResource(Service::all());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -35,26 +25,27 @@ class ServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function createService(Request $request)
+    public function create(Request $request)
     {
-
-        if ($request->validate([
-            'name' => ['required', 'max:45'],
-            'description' => ['required', 'max:45'],
-            'price' => ['required', 'integer'],
-            'duration' => ['required', 'integer']
-        ])) {
+        try {
+            $request->validate([
+                'name' => ['required', 'max:45'],
+                'description' => ['required', 'max:45'],
+                'price' => ['required', 'integer'],
+                'duration' => ['required', 'integer']
+            ]);
             $service = new Service();
             $service->name = $request->name;
             $service->description = $request->description;
             $service->price = $request->price;
             $service->duration = $request->duration;
             $service->save();
-
-            return response('You have successfully created a service.', 200);
-        } else {
-            return response('error', 405);
+        } catch (Exception $e) {
+            return response('The given data was invalid', 422);
         }
+
+
+        return response('You have successfully created a service.', 201);
     }
 
     /**
@@ -63,7 +54,7 @@ class ServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function get($id)
     {
         return new ServiceResource(Service::findOrFail($id));
     }
@@ -97,8 +88,15 @@ class ServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        try {
+            $service = Service::findOrFail($id);
+            $service->delete();
+        } catch (Exception $e) {
+            return response('The service is already deleted.', 405);
+        }
+
+        return response('The service is successfully deleted.', 200);
     }
 }
