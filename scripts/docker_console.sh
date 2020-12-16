@@ -27,10 +27,10 @@ docker network create lara-network || echo 'Network "lara-network" already creat
 docker pull php:latest
 
 # Start redis container
-# docker run --name redis -p 6379:6379 --network=lara-network -d redis:alpine
+docker run --name redis -p 6379:6379 --network=lara-network -d redis:alpine
 
-# Enable KEY events notifications
-# docker exec -it redis /bin/sh -c "redis-cli config set notify-keyspace-events KEA"
+Enable KEY events notifications
+docker exec -it redis /bin/sh -c "redis-cli config set notify-keyspace-events KEA"
 
 # Start mysql db container
 mkdir -p mysql
@@ -46,13 +46,6 @@ docker run --name lara-mysql --network=lara-network \
     -p 3307:3306 \
     -d mysql:5.7.32
 
-# Start nginx container
-docker run --name lara-nginx -p 80:80 -p 443:443 \
-    --network=lara-network \
-    -v /tmp:/tmp \
-    -v $(pwd)/etc/nginx/docker_nginx_dev.conf:/etc/nginx/conf.d/default.conf \
-    -v $(pwd)/etc/nginx/ssl:/etc/nginx/ssl \
-    -d nginx:alpine sh -c "while true; do nginx -g 'daemon off;'; sleep 1; done"
 
 # Build project image
 docker build --force-rm -t lara-server \
@@ -69,7 +62,7 @@ docker run --rm -it --name=lara-server \
 
 #docker rm -f redis
 docker rm -f lara-mysql
-docker rm -f lara-nginx
+# docker rm -f lara-nginx
 
 DANGLING=$(docker images -f "dangling=true" -q)
 if [ "x""$DANGLING" != "x" ]; then

@@ -41,11 +41,9 @@ class ServiceController extends Controller
             $service->duration = $request->duration;
             $service->save();
         } catch (Exception $e) {
-            return response('The given data was invalid', 422);
+            return response()->json(['msg' => 'The given data was invalid'], 422);
         }
-
-
-        return response('You have successfully created a service.', 201);
+        return response()->json(['msg' => 'You have successfully created a service.'], 201);
     }
 
     /**
@@ -94,9 +92,8 @@ class ServiceController extends Controller
             $service = Service::findOrFail($id);
             $service->delete();
         } catch (Exception $e) {
-            return response('The service is already deleted.', 405);
+            return response()->json(['msg' => 'The service is already deleted.'], 405);
         }
-
-        return response('The service is successfully deleted.', 200);
+        return response()->json(['msg' => 'The service is successfully deleted.'], 200);
     }
 }

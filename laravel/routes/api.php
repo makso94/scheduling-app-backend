@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use phpDocumentor\Reflection\DocBlock\Serializer;
@@ -24,3 +25,6 @@ Route::get('/services', [ServiceController::class, 'getAll']);
 Route::get('/services/{id}', [ServiceController::class, 'get']);
 Route::post('/services', [ServiceController::class, 'create']);
 Route::delete('/services/{id}', [ServiceController::class, 'delete']);
+
+
+Route::put('/session', [SessionController::class, 'login']);

@@ -1,6 +1,6 @@
 [mysqld]
 
-character_set_server=utf8mb4
+character_set_server=utf8
 
 general_log=1
 general_log_file=/var/lib/mysql/general_log.log
