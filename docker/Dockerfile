@@ -1,4 +1,4 @@
-FROM php:latest AS php-latest
+FROM php:7.4.13 AS php_7413
 
 LABEL maintainer="Mario Maksimovic <maki.makso@gmail.com>"
 LABEL description="Development environment (Debian based)."
@@ -45,7 +45,7 @@ RUN useradd -ms /bin/bash -u $uid -g $gid $user
 USER $user
 
 # ------------------------------- Laravel Backend ---------------------------------
-FROM php-latest AS lara
+FROM php_7413 AS lara
 LABEL description="Laravel backend development environment (PHP based)."
 
 USER root

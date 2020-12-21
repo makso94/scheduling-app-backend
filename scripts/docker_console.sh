@@ -24,12 +24,12 @@ SRC="$(dirname "$IMIN")"
 docker network create lara-network || echo 'Network "lara-network" already created!'
 
 # Update the base image
-docker pull php:latest
+docker pull php:7.4.13
 
 # Start redis container
 docker run --name redis -p 6379:6379 --network=lara-network -d redis:alpine
 
-Enable KEY events notifications
+# Enable KEY events notifications
 docker exec -it redis /bin/sh -c "redis-cli config set notify-keyspace-events KEA"
 
 # Start mysql db container
@@ -60,7 +60,7 @@ docker run --rm -it --name=lara-server \
     --hostname lara-server --network=lara-network --dns=8.8.4.4 -p 8000:8000 \
     -e USR=$(id -u $USER) -e GRP=$(id -g $GROUP) lara-server tmux -L lara-server
 
-#docker rm -f redis
+docker rm -f redis
 docker rm -f lara-mysql
 # docker rm -f lara-nginx
 

@@ -24,6 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/services', [ServiceController::class, 'getAll']);
 Route::get('/services/{id}', [ServiceController::class, 'get']);
 Route::post('/services', [ServiceController::class, 'create']);
+Route::put('/services/{id}', [ServiceController::class, 'update']);
 Route::delete('/services/{id}', [ServiceController::class, 'delete']);
 
 

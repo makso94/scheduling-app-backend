@@ -9,28 +9,19 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function getAll()
     {
         return new ServiceResource(Service::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function create(Request $request)
     {
         try {
             $request->validate([
                 'name' => ['required', 'max:45'],
-                'description' => ['required', 'max:45'],
+                'description' => ['max:45'],
                 'price' => ['required', 'integer'],
                 'duration' => ['required', 'integer']
             ]);
@@ -40,60 +31,49 @@ class ServiceController extends Controller
             $service->price = $request->price;
             $service->duration = $request->duration;
             $service->save();
+            return response()->json(['msg' => 'You have successfully created a service.'], 201);
         } catch (Exception $e) {
             return response()->json(['msg' => 'The given data was invalid'], 422);
         }
-        return response()->json(['msg' => 'You have successfully created a service.'], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function get($id)
     {
         return new ServiceResource(Service::findOrFail($id));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $request->validate([
+                'name' => ['required', 'max:45'],
+                'description' => ['max:45'],
+                'price' => ['required', 'numeric'],
+                'duration' => ['required', 'integer']
+            ]);
+            $service = Service::findOrFail($id);
+            $service->name = $request->name;
+            $service->description = $request->description;
+            $service->price = $request->price;
+            $service->duration = $request->duration;
+            $service->save();
+            return response()->json(['msg' => 'You have successfully updated a service.'], 201);
+        } catch (Exception $e) {
+            return response()->json(['msg' => 'The given data was invalid'], 422);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function delete($id)
     {
         try {
             $service = Service::findOrFail($id);
             $service->delete();
+            return response()->json(['msg' => 'The service is successfully deleted.'], 200);
         } catch (Exception $e) {
             return response()->json(['msg' => 'The service is already deleted.'], 405);
         }
-        return response()->json(['msg' => 'The service is successfully deleted.'], 200);
     }
 }
