@@ -29,8 +29,8 @@ ENV TZ=Europe/Skopje
 RUN echo 'en_US.UTF-8 UTF-8' >/etc/locale.gen
 RUN locale-gen
 
-# Installing redis extensions
-RUN pecl install redis-5.1.1  
+# Installing redis with pecl
+RUN pecl install redis
 
 # Enabling php extensions
 RUN docker-php-ext-install pdo_mysql intl \

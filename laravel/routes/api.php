@@ -30,4 +30,4 @@ Route::delete('/services/{id}', [ServiceController::class, 'delete']);
 
 Route::put('/session', [SessionController::class, 'login']);
 Route::get('/session', [SessionController::class, 'checkSession']);
-
+Route::delete('/session', [SessionController::class, 'logout']);
