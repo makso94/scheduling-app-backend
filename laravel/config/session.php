@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'file'),
+    'driver' => env('SESSION_DRIVER', 'redis'),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,13 +66,11 @@ return [
     | Session Database Connection
     |--------------------------------------------------------------------------
     |
-    | When using the "database" or "redis" session drivers, you may specify a
-    | connection that should be used to manage these sessions. This should
-    | correspond to a connection in your database configuration options.
-    |
+    | When using the "database" or #
     */
 
-    'connection' => env('SESSION_CONNECTION', null),
+    // 'connection' => env('SESSION_CONNECTION', null),
+    'connection' => 'session',
 
     /*
     |--------------------------------------------------------------------------

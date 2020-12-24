@@ -12,10 +12,10 @@ if [ -f "$LOCK_FILE" ]; then
     exit
 fi
 
-if [ $1'x' == 'x' ]; then
-    echo "Please provide one argument -> the directory of the application you want to serve"
-    exit 1
-fi
+# if [ $1'x' == 'x' ]; then
+#     echo "Please provide one argument -> the directory of the application you want to serve"
+#     exit 1
+# fi
 
 trap "rm -f $LOCK_FILE" EXIT
 touch $LOCK_FILE
@@ -25,7 +25,8 @@ IMIN="$(cd "$(dirname "$0")" && pwd)"
 
 # --- Body --------------------------------------------------------------------
 
-cd $1
+# cd $1
+cd laravel/
 
 # Installing npm dependencies from lock file
 npm install

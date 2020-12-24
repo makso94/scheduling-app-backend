@@ -35,7 +35,7 @@ docker exec -it redis /bin/sh -c "redis-cli config set notify-keyspace-events KE
 # Start mysql db container
 mkdir -p mysql
 
-docker run --name lara-mysql --network=lara-network \
+docker run --name mysql --network=lara-network \
     --user $(id -u $USER):$(id -g $GROUP) \
     -v $SRC/mysql:/var/lib/mysql \
     -v $SRC/etc/mysql:/etc/mysql/conf.d \
@@ -61,7 +61,7 @@ docker run --rm -it --name=lara-server \
     -e USR=$(id -u $USER) -e GRP=$(id -g $GROUP) lara-server tmux -L lara-server
 
 docker rm -f redis
-docker rm -f lara-mysql
+docker rm -f mysql
 # docker rm -f lara-nginx
 
 DANGLING=$(docker images -f "dangling=true" -q)

@@ -6,6 +6,8 @@ use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ServiceController extends Controller
 {
