@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use phpDocumentor\Reflection\DocBlock\Serializer;
@@ -31,3 +32,6 @@ Route::delete('/services/{id}', [ServiceController::class, 'delete']);
 Route::put('/session', [SessionController::class, 'login']);
 Route::get('/session', [SessionController::class, 'checkSession']);
 Route::delete('/session', [SessionController::class, 'logout']);
+
+
+Route::post('/users', [UserController::class, 'create']);

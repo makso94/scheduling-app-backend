@@ -19,7 +19,7 @@ class SessionController extends Controller
             if ($user === null) {
                 return response()->json(['msg' => 'Could not find you email'], 403);
             }
-            if ($user->password == $req->password) {
+            if ($user->password === hash('sha512', $req->password)) {
 
                 $session_id = (string) Str::uuid();
                 Redis::set($session_id, json_encode($user));
@@ -44,8 +44,6 @@ class SessionController extends Controller
                 return response()->json(json_decode($userFromRedis));
             };
             return response()->json(['msg' => 'Forbidden, you are not logged in'], 403);
-
-
         } catch (Error $err) {
             return response()->json(['msg' => 'Unknown error'], 500);
         }
