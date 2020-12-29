@@ -35,3 +35,5 @@ Route::delete('/session', [SessionController::class, 'logout']);
 
 
 Route::post('/users', [UserController::class, 'create']);
+Route::get('/users', [UserController::class, 'getAll']);
+

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Error;
 use Illuminate\Http\Request;
@@ -9,6 +10,15 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     //
+
+    public function getAll(Request $request)
+    {
+        // dd($request->query->parameters);
+        dd($request->get('query'));
+
+        // return new UserResource(User::all());
+        return new UserResource(User::where('is_admin', 1)->get());
+    }
 
     public function create(Request $request)
     {
