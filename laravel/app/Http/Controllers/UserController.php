@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Error;
+use Exception;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,11 +14,30 @@ class UserController extends Controller
 
     public function getAll(Request $request)
     {
-        // dd($request->query->parameters);
-        dd($request->get('query'));
+        try {
 
-        // return new UserResource(User::all());
-        return new UserResource(User::where('is_admin', 1)->get());
+            $query_params = $request->all();
+            if ($query_params) {
+
+                $conditions =  array_filter($query_params, function ($key) {
+                    if ($key != 'first_name' && $key != 'last_name' && $key != 'email') {
+                        return $key;
+                    }
+                }, ARRAY_FILTER_USE_KEY);
+
+                return new UserResource(
+                    User::where($conditions)
+                        ->where('first_name', 'like', '%' . $request->first_name . '%')
+                        ->where('last_name', 'like', '%' . $request->last_name . '%')
+                        ->where('email', 'like', '%' . $request->email . '%')
+                        ->get()
+                );
+            }
+
+            return new UserResource(User::all());
+        } catch (Exception $e) {
+            return response()->json(['msg' => 'Invalid filter'], 400);
+        }
     }
 
     public function create(Request $request)
@@ -44,7 +64,7 @@ class UserController extends Controller
             $user->save();
 
             return response()->json(['msg' => 'You have successfully created a user.'], 201);
-        } catch (Error $error) {
+        } catch (Exception $e) {
         }
     }
 }
