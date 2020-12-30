@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -20,9 +21,10 @@ class CreateUsersTable extends Migration
             $table->string('last_name', 32);
             $table->string('email', 64)->unique();
             $table->string('password');
-            $table->timestamp('verified_at')->nullable();
             $table->boolean('is_admin')->nullable()->default(0);
             $table->timestamps();
+            $table->timestamp('approved_at')->nullable();
+            $table->timestamp('deactivated_at')->nullable();
         });
 
 
@@ -34,6 +36,9 @@ class CreateUsersTable extends Migration
                 'last_name' => 'Last name',
                 'password' =>  hash('sha512', '123'),
                 'is_admin' => 1,
+                'approved_at' => Carbon::now(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             )
         );
     }
