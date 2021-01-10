@@ -14,8 +14,8 @@ class AddForeignKeysToAppointmentsHasServicesTable extends Migration
     public function up()
     {
         Schema::table('appointments_has_services', function (Blueprint $table) {
-            $table->foreign('appointments_id', 'fk_appointments_has_services_appointments1')->references('id')->on('appointments')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-            $table->foreign('services_id', 'fk_appointments_has_services_services1')->references('id')->on('services')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign('appointments_id', 'fk_appointments_has_services_appointments')->references('id')->on('appointments')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('services_id', 'fk_appointments_has_services_services')->references('id')->on('services')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 
@@ -27,8 +27,8 @@ class AddForeignKeysToAppointmentsHasServicesTable extends Migration
     public function down()
     {
         Schema::table('appointments_has_services', function (Blueprint $table) {
-            $table->dropForeign('fk_appointments_has_services_appointments1');
-            $table->dropForeign('fk_appointments_has_services_services1');
+            $table->dropForeign('fk_appointments_has_services_appointments');
+            $table->dropForeign('fk_appointments_has_services_services');
         });
     }
 }

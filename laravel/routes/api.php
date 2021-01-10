@@ -3,6 +3,7 @@
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkingDaysController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use phpDocumentor\Reflection\DocBlock\Serializer;
@@ -34,6 +35,11 @@ Route::get('/session', [SessionController::class, 'checkSession']);
 Route::delete('/session', [SessionController::class, 'logout']);
 
 
-Route::post('/users', [UserController::class, 'create']);
 Route::get('/users', [UserController::class, 'getAll']);
+Route::post('/users', [UserController::class, 'create']);
+Route::get('/users/{id}/approve', [UserController::class, 'approve']);
+Route::get('/users/{id}/deactive', [UserController::class, 'deactive']);
+
+Route::get('/working-days', [WorkingDaysController::class, 'getByMonthYear']);
+Route::post('/working-days', [WorkingDaysController::class, 'createByMonthYear']);
 

@@ -15,8 +15,8 @@ class CreateAppointmentsTable extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('working_days_id')->index('fk_appointments_working_days1_idx');
-            $table->unsignedInteger('users_id')->index('fk_appointments_users1_idx');
+            $table->unsignedInteger('working_days_id')->index('fk_appointments_working_days_idx');
+            $table->unsignedInteger('users_id')->index('fk_appointments_users_idx');
             $table->dateTime('start');
         });
     }

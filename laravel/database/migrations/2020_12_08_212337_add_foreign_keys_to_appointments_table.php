@@ -14,8 +14,8 @@ class AddForeignKeysToAppointmentsTable extends Migration
     public function up()
     {
         Schema::table('appointments', function (Blueprint $table) {
-            $table->foreign('users_id', 'fk_appointments_users1')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-            $table->foreign('working_days_id', 'fk_appointments_working_days1')->references('id')->on('working_days')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign('users_id', 'fk_appointments_users')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('working_days_id', 'fk_appointments_working_days')->references('id')->on('working_days')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 
@@ -27,8 +27,8 @@ class AddForeignKeysToAppointmentsTable extends Migration
     public function down()
     {
         Schema::table('appointments', function (Blueprint $table) {
-            $table->dropForeign('fk_appointments_users1');
-            $table->dropForeign('fk_appointments_working_days1');
+            // $table->dropForeign('fk_appointments_users');
+            $table->dropForeign('fk_appointments_working_days');
         });
     }
 }

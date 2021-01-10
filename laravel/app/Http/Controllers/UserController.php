@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Carbon\Carbon;
 use Error;
 use Exception;
 use Illuminate\Http\Request;
@@ -65,6 +66,33 @@ class UserController extends Controller
 
             return response()->json(['msg' => 'You have successfully created a user.'], 201);
         } catch (Exception $e) {
+        }
+    }
+
+
+    public function approve(Request $request,  $id)
+    {
+
+        try {
+            $user = User::findOrFail($id);
+            $user->approved_at = Carbon::now();
+            $user->save();
+            return response()->json(['msg' => 'Successfully approved user'], 200);
+        } catch (Exception $e) {
+        }
+    }
+
+
+    public function deactive(Request $request,  $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->deactivated_at = Carbon::now();
+            $user->approved_at = null;
+            $user->save();
+            return response()->json(['msg' => 'Successfully deactivated user'], 200);
+        } catch (Exception $e) {
+            // return response()->json(['msg' => 'Server error'], 500);
         }
     }
 }

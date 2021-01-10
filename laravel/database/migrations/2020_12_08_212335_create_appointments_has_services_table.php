@@ -14,8 +14,8 @@ class CreateAppointmentsHasServicesTable extends Migration
     public function up()
     {
         Schema::create('appointments_has_services', function (Blueprint $table) {
-            $table->unsignedInteger('appointments_id')->index('fk_appointments_has_services_appointments1_idx');
-            $table->unsignedInteger('services_id')->index('fk_appointments_has_services_services1_idx');
+            $table->unsignedInteger('appointments_id')->index('fk_appointments_has_services_appointments_idx');
+            $table->unsignedInteger('services_id')->index('fk_appointments_has_services_services_idx');
             $table->primary(['appointments_id', 'services_id']);
         });
     }
