@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\WorkingDaysResource;
 use App\Models\WorkingDays;
 use Carbon\Carbon;
-use DateTime;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
 
 class WorkingDaysController extends Controller
 {
@@ -30,13 +28,21 @@ class WorkingDaysController extends Controller
     public function createByMonthYear(Request $request)
     {
         try {
+            $request->validate([
+                'year' => ['required'],
+                'month' => ['required'],
+                'days'  => ['required'],
+                'opens' => ['required'],
+                'closes' => ['required']
+            ]);
+
             $month = $request->month;
             $year = $request->year;
-            $days_off = $request->days_off;
+            $days = $request->days;
             $date = Carbon::create($year, $month);
 
             for ($i = 1; $i <= $date->daysInMonth; $i++) {
-                if (!in_array($i, $days_off)) {
+                if (in_array($i, $days)) {
                     $day = WorkingDays::firstOrNew(['date' => Carbon::create($year, $month, $i)->toDateString()]);
                     $day->date = Carbon::create($year, $month, $i)->toDateString();
                     $day->opens = Carbon::create($year, $month, $i, explode(':', $request->opens)[0], explode(':', $request->opens)[1])->toDateTimeString();
@@ -47,6 +53,7 @@ class WorkingDaysController extends Controller
             }
             return response()->json(['msg' => 'Successfully created month'], 201);
         } catch (Exception $e) {
+            return response()->json(['msg' => 'The given data was invalid'], 422);
         }
     }
 }
