@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkingDaysController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use phpDocumentor\Reflection\DocBlock\Serializer;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +42,7 @@ Route::get('/users/{id}/deactive', [UserController::class, 'deactive']);
 
 Route::get('/working-days', [WorkingDaysController::class, 'getByMonthYear']);
 Route::post('/working-days', [WorkingDaysController::class, 'createByMonthYear']);
+Route::put('/working-days/{id}', [WorkingDaysController::class, 'update']);
 
+
+Route::get('/appointments', [AppointmentsController::class, 'getAppoitmentsByDate']);

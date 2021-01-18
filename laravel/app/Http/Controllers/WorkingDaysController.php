@@ -41,17 +41,38 @@ class WorkingDaysController extends Controller
             $days = $request->days;
             $date = Carbon::create($year, $month);
 
+            $insertDays = [];
+
             for ($i = 1; $i <= $date->daysInMonth; $i++) {
                 if (in_array($i, $days)) {
-                    $day = WorkingDays::firstOrNew(['date' => Carbon::create($year, $month, $i)->toDateString()]);
-                    $day->date = Carbon::create($year, $month, $i)->toDateString();
-                    $day->opens = Carbon::create($year, $month, $i, explode(':', $request->opens)[0], explode(':', $request->opens)[1])->toDateTimeString();
-                    $day->closes = Carbon::create($year, $month, $i, explode(':', $request->closes)[0], explode(':', $request->closes)[1])->toDateTimeString();
-                    $day->is_business_day = true;
-                    $day->save();
+                    array_push($insertDays, [
+                        'date' => Carbon::create($year, $month, $i)->toDateString(),
+                        'opens' => Carbon::create($year, $month, $i, explode(':', $request->opens)[0], explode(':', $request->opens)[1])->toDateTimeString(),
+                        'closes' => Carbon::create($year, $month, $i, explode(':', $request->closes)[0], explode(':', $request->closes)[1])->toDateTimeString(),
+                        'is_business_day' => true
+                    ]);
                 }
             }
+            WorkingDays::insert($insertDays);
             return response()->json(['msg' => 'Successfully created month'], 201);
+        } catch (Exception $e) {
+            return response()->json(['msg' => 'The given data was invalid'], 422);
+        }
+    }
+
+    public function update(Request $req, $id)
+    {
+        try {
+            $req->validate([
+                'closes' => ['required'],
+                'opens' => ['required'],
+            ]);
+
+            $day = WorkingDays::findOrFail($id);
+            $day->opens = $day->date . ' ' . $req->opens;
+            $day->closes = $day->date . ' ' . $req->closes;
+            $day->save();
+            return response()->json(['msg' => 'Successfully updated working day'], 200);
         } catch (Exception $e) {
             return response()->json(['msg' => 'The given data was invalid'], 422);
         }
