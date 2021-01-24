@@ -77,4 +77,15 @@ class WorkingDaysController extends Controller
             return response()->json(['msg' => 'The given data was invalid'], 422);
         }
     }
+
+    public function delete(Request $req, $id)
+    {
+        try {
+            $day = WorkingDays::findOrFail($id);
+            $day->delete();
+            return response()->json(['msg' => 'Successfully deleted working day'], 200);
+        } catch (Exception $e) {
+            return response()->json(['msg' => 'The given data was invalid'], 422);
+        }
+    }
 }

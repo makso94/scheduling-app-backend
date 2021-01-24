@@ -43,6 +43,6 @@ Route::get('/users/{id}/deactive', [UserController::class, 'deactive']);
 Route::get('/working-days', [WorkingDaysController::class, 'getByMonthYear']);
 Route::post('/working-days', [WorkingDaysController::class, 'createByMonthYear']);
 Route::put('/working-days/{id}', [WorkingDaysController::class, 'update']);
-
+Route::delete('/working-days/{id}', [WorkingDaysController::class, 'delete']);
 
 Route::get('/appointments', [AppointmentsController::class, 'getAppoitmentsByDate']);
