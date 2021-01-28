@@ -11,4 +11,10 @@ class Service extends Model
 
     protected $table = 'services';
 
+
+
+    public function appointments()
+    {
+        return $this->belongsToMany(Appointments::class);
+    }
 }
