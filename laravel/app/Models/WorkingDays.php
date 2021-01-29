@@ -30,4 +30,9 @@ class WorkingDays extends Model
         'closes',
         'is_business_day'
     ];
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointments::class);
+    }
 }
