@@ -11,7 +11,7 @@ class Service extends Model
 
     protected $table = 'services';
 
-
+    protected $hidden = ['created_at', 'updated_at', 'pivot'];
 
     public function appointments()
     {
