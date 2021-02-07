@@ -7,6 +7,8 @@ use App\Http\Resources\WorkingDaysResource;
 use App\Models\Appointments;
 use App\Models\Service;
 use App\Models\WorkingDays;
+use App\Models\User;
+use App\Models\Users;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -37,6 +39,27 @@ class AppointmentsController extends Controller
             }
         } catch (Exception $e) {
             return response()->json(['msg' => 'The given data was invalid'], 422);
+        }
+    }
+
+
+    public function getAppointmentsByUserId(Request $req, $id)
+    {
+        try {
+            return new AppointmentsResource(Appointments::where('users_id', $id)->with('services')->get());
+        } catch (Exception $e) {
+        }
+    }
+
+
+    public function deleteAppointment(Request $req, $id)
+    {
+        try {
+            $app = Appointments::findOrFail($id);
+            $app->delete();
+            return response()->json(['msg' => 'The appointment is successfully deleted.'], 200);
+        } catch (Exception $e) {
+            return response()->json(['msg' => 'The appointment is already deleted.'], 405);
         }
     }
 

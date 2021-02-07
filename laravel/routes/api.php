@@ -46,5 +46,7 @@ Route::put('/working-days/{id}', [WorkingDaysController::class, 'update']);
 Route::delete('/working-days/{id}', [WorkingDaysController::class, 'delete']);
 
 Route::get('/appointments', [AppointmentsController::class, 'getAppoitmentsByDate']);
+Route::get('/appointments/user/{id}', [AppointmentsController::class, 'getAppointmentsByUserId']);
 Route::get('/appointments/{id}/services', [AppointmentsController::class, 'getSerivesByAppointment']);
 Route::post('/appointments', [AppointmentsController::class, 'create']);
+Route::delete('/appointments/{id}', [AppointmentsController::class, 'deleteAppointment']);

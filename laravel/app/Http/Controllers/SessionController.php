@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Error;
+use App\Models\Users;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Redis;
@@ -15,7 +15,7 @@ class SessionController extends Controller
     public function login(Request $req)
     {
         try {
-            $user = User::where('email', $req->email)->first();
+            $user = Users::where('email', $req->email)->first();
             if ($user === null) {
                 return response()->json(['msg' => 'Could not find you email'], 403);
             }
@@ -28,7 +28,7 @@ class SessionController extends Controller
             }
 
             return response()->json(['msg' => 'Forbidden, wrong password'], 403);
-        } catch (Error $err) {
+        } catch (Exception $err) {
             return response()->json(['msg' => 'Unknown error'], 500);
         }
     }
@@ -44,7 +44,7 @@ class SessionController extends Controller
                 return response()->json(json_decode($userFromRedis));
             };
             return response()->json(['msg' => 'Forbidden, you are not logged in'], 403);
-        } catch (Error $err) {
+        } catch (Exception $err) {
             return response()->json(['msg' => 'Unknown error'], 500);
         }
     }
@@ -58,7 +58,7 @@ class SessionController extends Controller
                 return response()->json(['msg' => 'You are successfully logged out'], 200)->cookie($cookie);
             }
             return response()->json(['msg' => 'You are already logged out'], 200)->cookie($cookie);
-        } catch (Error $err) {
+        } catch (Exception $err) {
             return response()->json(['msg' => 'Unknown error'], 500);
         }
     }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Models\Users;
 use Carbon\Carbon;
 use Error;
 use Exception;
@@ -27,7 +27,7 @@ class UserController extends Controller
                 }, ARRAY_FILTER_USE_KEY);
 
                 return new UserResource(
-                    User::where($conditions)
+                    Users::where($conditions)
                         ->where('first_name', 'like', '%' . $request->first_name . '%')
                         ->where('last_name', 'like', '%' . $request->last_name . '%')
                         ->where('email', 'like', '%' . $request->email . '%')
@@ -35,7 +35,7 @@ class UserController extends Controller
                 );
             }
 
-            return new UserResource(User::all());
+            return new UserResource(Users::all());
         } catch (Exception $e) {
             return response()->json(['msg' => 'Invalid filter'], 400);
         }
@@ -52,11 +52,11 @@ class UserController extends Controller
                 'is_admin' => ['required'],
             ]);
 
-            if (User::where('email', $request->email)->first()) {
+            if (Users::where('email', $request->email)->first()) {
                 return response()->json(['msg' => 'Duplicate email'], 422);
             }
 
-            $user = new User();
+            $user = new Users();
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
@@ -74,7 +74,7 @@ class UserController extends Controller
     {
 
         try {
-            $user = User::findOrFail($id);
+            $user = Users::findOrFail($id);
             $user->approved_at = Carbon::now();
             $user->save();
             return response()->json(['msg' => 'Successfully approved user'], 200);
@@ -86,7 +86,7 @@ class UserController extends Controller
     public function deactive(Request $request,  $id)
     {
         try {
-            $user = User::findOrFail($id);
+            $user = Users::findOrFail($id);
             $user->deactivated_at = Carbon::now();
             $user->approved_at = null;
             $user->save();
