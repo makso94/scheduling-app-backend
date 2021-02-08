@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
                 'email' => 'admin@hs.com',
                 'first_name' => 'First name',
                 'last_name' => 'Last name',
-                'password' =>  hash('sha512', '123'),
+                'password' =>  hash('sha512', '12345'),
                 'is_admin' => 1,
                 'approved_at' => Carbon::now(),
                 'created_at' => Carbon::now(),

@@ -62,6 +62,9 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->password = hash('sha512',  $request->password);
             $user->is_admin = $request->is_admin;
+            if ($user->is_admin) {
+                $user->approved_at = Carbon::now();
+            }
             $user->save();
 
             return response()->json(['msg' => 'You have successfully created a user.'], 201);
