@@ -51,13 +51,11 @@ class ServiceController extends Controller
         try {
             $request->validate([
                 'name' => ['required', 'max:45'],
-                'description' => ['max:45'],
                 'price' => ['required', 'numeric'],
                 'duration' => ['required', 'integer']
             ]);
             $service = Service::findOrFail($id);
             $service->name = $request->name;
-            $service->description = $request->description;
             $service->price = $request->price;
             $service->duration = $request->duration;
             $service->save();
