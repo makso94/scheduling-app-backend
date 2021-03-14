@@ -24,7 +24,7 @@ In order to run this project, follow the following steps:
     ```
       ./scripts/docker_serve.sh
     ```
-
+4. Continue the steps for [Frontend](https://github.com/makso94/scheduling-app-frontend)
 ----------
 
 ## MySQL General LOG
