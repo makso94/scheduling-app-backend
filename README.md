@@ -1,27 +1,36 @@
-# laravel
-Laravel project in docker
+# Appointment Scheduling, Server App (Backend)
+This project is writen in Laravel 8.12
 
+In order to run this project, follow the following steps:
 
-1. run docker_console.sh script from host
-  example:
-    ./scripts/docker_console.sh
-    
-2. from the runned container run docker_serve.sh script with laravel directory as argument $1
-  example:
-    ./scripts/docker_serve.sh laravel
+0. To run this project you need to have installed [Docker engine](https://www.docker.com/) on your local machine.
 
-#############################################################################################
-You can create another laravel project with the following command
+    Docker installation tutorial for Ubuntu distros
+    * https://docs.docker.com/engine/install/ubuntu/
+    * https://docs.docker.com/engine/install/linux-postinstall/
 
-example:
-    composer create-project --prefer-dist laravel/laravel some_project_name
+1. Clone github project
 
+2. From your local machine run docker_console.sh script
+  
+      **The script MUST be runned from project root directory**
 
-Then you can serve this project with following command:
-    ./scripts/docker_serve.sh some_project_name
+    ```
+      ./scripts/docker_console.sh
+    ```
+3. In the running container run docker_serve.sh script in order to serve the project
+      
+      **The script MUST be runned from project root directory**
+    ```
+      ./scripts/docker_serve.sh
+    ```
 
+----------
 
-You can monitor mysql general log with the following command
+## MySQL General LOG
+You can monitor MySQL general log with the following command
+```
+  tail -f mysql/general_log.log
+```
 
-tail -f mysql/general_log.log
-
+> Note: This project is made for the purpose of graduate thesis.
